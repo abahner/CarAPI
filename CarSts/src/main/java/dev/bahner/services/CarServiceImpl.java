@@ -5,12 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.server.ResponseStatusException;
 
 import dev.bahner.beans.Car;
 import dev.bahner.repositories.CarRepo;
 
-
+@CrossOrigin
 @Service
 public class CarServiceImpl implements CarService {
 	
@@ -76,5 +77,16 @@ public class CarServiceImpl implements CarService {
 		return cr.findByMakeAndModel(make, model);
 
 	}
+
+	@Override
+	public List<Car> getCarTrim(String trim) {
+		return cr.findByTrim(trim);
+	}
+
+	@Override
+	public List<Car> getCarMakeAndModelAndTrim(String make, String model, String trim) {
+		return cr.findByMakeAndModelAndTrim(make, model, trim);
+	}
+
 	
 }

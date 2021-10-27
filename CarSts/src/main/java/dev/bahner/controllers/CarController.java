@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.bahner.beans.Car;
 import dev.bahner.services.CarService;
 
+@CrossOrigin
 @RestController
 public class CarController {
 	
@@ -34,14 +36,19 @@ public class CarController {
 	}
 	
 	@GetMapping("cars/search")
-	public List<Car> searchCar(@RequestParam(required = false) String make, @RequestParam(required = false) String model) {
+	public List<Car> searchCar(@RequestParam(required = false) String make, @RequestParam(required = false) String model, @RequestParam(required = false) String trim, @RequestParam(required = false) int year) {
 		
 		if (make != null && model != null) {
+			if (trim != null) {
+				return cs.getCarMakeAndModelAndTrim(make, model, trim);
+			}
 			return cs.getCarMakeAndModel(make, model);
-		} else if (make == null) {
-			return cs.getCarModel(model);
-		} else if (model == null) {
+		} else if (make == null && model == null) {
+			return cs.getCarTrim(trim);
+		} else if (model == null && trim == null) {
 			return cs.getCarMake(make);
+		} else if (make == null && trim == null){
+			return cs.getCarModel(model);
 		} else {
 			return new ArrayList<Car>();
 		}
@@ -64,4 +71,7 @@ public class CarController {
 		return cs.deleteCar(id);
 	}
 	
+	
 }
+	
+

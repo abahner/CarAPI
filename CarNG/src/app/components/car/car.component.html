@@ -1,6 +1,16 @@
-<h3>Search a car by make id:</h3>
 
-<input type="number" [(ngModel)]="input">
-<button (click)="getCars()">Search</button>
-<h4 id="carId">-</h4>
-<h4 id="carName">-</h4>
+<div>
+
+    <h3 style="margin-left: 25px;">Search Cars:</h3>
+    <label style="margin-left: 25px;">Make: </label>
+    <input type="text" [(ngModel)]="make">
+    <label style="margin-left: 25px;">Model: </label>
+    <input type="text" [(ngModel)]="model">
+    <br>
+    <button (click)="searchCars()" style="margin: 25px 15px 0px 25px">Search</button>
+    <hr>
+
+
+</div>
+
+<h4 id="carData"></h4>
