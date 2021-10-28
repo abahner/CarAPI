@@ -3,14 +3,16 @@
 
     <h3 style="margin-left: 25px;">Search Cars:</h3>
     <label style="margin-left: 25px;">Make: </label>
-    <input type="text" [(ngModel)]="make">
+    <input id="inputMake" type="text" [(ngModel)]="make">
     <label style="margin-left: 25px;">Model: </label>
-    <input type="text" [(ngModel)]="model">
+    <input id="inputModel" type="text" [(ngModel)]="model">
+    <label style="margin-left: 25px;">Trim: </label>
+    <input id="inputTrim" type="text" [(ngModel)]="trim">
     <br>
-    <button (click)="searchCars()" style="margin: 25px 15px 0px 25px">Search</button>
+    <button id="q" (click)="searchCars()" style="margin: 25px 15px 0px 25px">Search</button>
     <hr>
 
 
 </div>
 
-<h4 id="carData"></h4>
+<h4 id="carData">-</h4>

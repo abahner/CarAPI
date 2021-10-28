@@ -36,7 +36,7 @@ public class CarController {
 	}
 	
 	@GetMapping("cars/search")
-	public List<Car> searchCar(@RequestParam(required = false) String make, @RequestParam(required = false) String model, @RequestParam(required = false) String trim, @RequestParam(required = false) int year) {
+	public List<Car> searchCar(@RequestParam(required = false) String make, @RequestParam(required = false) String model, @RequestParam(required = false) String trim) {
 		
 		if (make != null && model != null) {
 			if (trim != null) {

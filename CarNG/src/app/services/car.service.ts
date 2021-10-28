@@ -14,16 +14,8 @@ export class CarService {
     return this.http.get<Car[]>('http://localhost:8080/cars');
   }
 
-  getCarByMake(input: string) : Observable<Car[]>{
-    return this.http.get<Car[]>('http://localhost:8080/cars/search?make=' + input)  
-  }
-
-  getCarByModel(input: string) : Observable<Car[]>{
-    return this.http.get<Car[]>('http://localhost:8080/cars/search?model=' + input)  
-  }
-
-  getCarByMakeModel(input: string) : Observable<Car[]>{
-    return this.http.get<Car[]>('http://localhost:8080/cars/search?make=' + input)  
+  searchCars(key: string, value: string) : Observable<Car[]>{
+    return this.http.get<Car[]>(`http://localhost:8080/cars/search?${key}=${value}`)  
   }
 
 }

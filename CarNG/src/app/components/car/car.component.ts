@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Car } from 'src/app/models/Car'
 import { CarService } from 'src/app/services/car.service';
 
@@ -16,8 +17,7 @@ export class CarComponent implements OnInit {
 
   make:string = '';
   model:string = '';
-  makeModel:string = '';
-  result:string = '';
+  trim:string = '';
 
   getCars() {
     this.http.getAllCars().subscribe(
@@ -28,46 +28,41 @@ export class CarComponent implements OnInit {
   }
 
   searchCars() {
+    if (this.model === "" && this.make !== "") {
+      this.http.searchCars("make", this.make).subscribe(
+        (response) => {
+          if (this.trim !== "") {
+            response = response.filter(car => car.trim === this.trim)
+          }
+          console.log(response)
+          
+        }
+      )
+    } else if (this.model !== "" || this.trim !== "") {
+      this.http.searchCars("model", this.model).subscribe(
+        (response) => {
 
-    if (this.make.length == 0 && this.model.length > 0) {
-      this.getCarByModel()
-      this.result  = 'Search results for: ' + this.model
-    } else if (this.make.length > 0 && this.model.length == 0) {
-      this.getCarsByMake()
-      document.getElementById("carData")?.innerHTML == 'Search results for Make: ' + this.make
-    } else if (this.make.length > 0 && this.model.length > 0) {
-      this.makeModel = this.make + '&model=' + this.model
-      this.getCarsByMakeAndModel()
-      document.getElementById("carData")?.innerHTML + 'Search results for: ' + this.make + ' ' + this.model 
+          if (this.trim !== "" && this.model !== "") {
+            response = response.filter(car => car.trim === this.trim)
+            console.log(response)
 
+          } else if (this.make === "" && this.model === "") {
+            this.http.searchCars("trim", this.trim).subscribe(
+              (response) => {
+                console.log(response)
+
+              }
+            )
+          } else if (this.make !== "") {
+            response = response.filter(car => car.make === this.make)
+            console.log(response)
+
+          } else {
+            console.log(response)
+          }
+
+        }
+      )
     }
   }
-
-  getCarsByMake() {
-    this.http.getCarByMake(this.make).subscribe(
-      (response) => {
-        console.log(response);
-      }
-    )
-  }
-
-  getCarByModel() {
-    this.http.getCarByModel(this.model).subscribe(
-      (response) => {
-        console.log(response);
-      }
-    )
-  }
-
-  getCarsByMakeAndModel() {
-    this.http.getCarByMakeModel(this.makeModel).subscribe(
-      (response) => {
-        console.log(response);
-      }
-    )
-  }
-
-  searchResults() {
-  }
-
 }
