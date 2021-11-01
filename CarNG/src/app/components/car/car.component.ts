@@ -21,11 +21,13 @@ export class CarComponent implements OnInit {
   year:number = 0;
   price:number = 0;
   mileage:number = 0;
+  carsList : Car[] = [];
 
   getCars() {
     this.http.getAllCars().subscribe(
       (response) => {
         console.log(response);
+        this.carsList = response
       }
     )
   }
@@ -52,6 +54,7 @@ export class CarComponent implements OnInit {
           response = response.filter(car => car.mileage === this.mileage)
         }
         console.log(response);
+        this.carsList = response
       }
     )
   }

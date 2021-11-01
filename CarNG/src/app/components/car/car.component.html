@@ -21,4 +21,28 @@
 
 </div>
 
-<h4 id="carData">-</h4>
+<h4>-</h4>
+<table id="carDataTable" class="table table-danger">
+
+    <thead>
+        <tr>
+          <th scope="col">Make</th>
+          <th scope="col">Model</th>
+          <th scope="col">Trim</th>
+          <th scope="col">Year</th>
+          <th scope="col">Price</th>
+          <th scope="col">Mileage</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let car of carsList">
+          <td scope="row">{{car.make}}</td>
+          <td scope="row">{{car.model}}</td>
+          <td scope="row">{{car.trim}}</td>
+          <td scope="row">{{car.year}}</td>
+          <td scope="row">{{car.price}}</td>
+          <td scope="row">{{car.mileage}}</td>
+        </tr>
+    </tbody>
+
+</table>
