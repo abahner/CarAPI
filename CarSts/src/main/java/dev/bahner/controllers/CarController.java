@@ -35,20 +35,22 @@ public class CarController {
 		return cs.getCar(Integer.parseInt(id));
 	}
 	
+	
 	@GetMapping("cars/search")
-	public List<Car> searchCar(@RequestParam(required = false) String make, @RequestParam(required = false) String model, @RequestParam(required = false) String trim) {
+	public List<Car> searchCar(@RequestParam(required = false) String make, @RequestParam(required = false) String model, @RequestParam(required = false) String trim, @RequestParam(required = false) String year, @RequestParam(required = false) String price,@RequestParam(required = false) String mileage) {
 		
-		if (make != null && model != null) {
-			if (trim != null) {
-				return cs.getCarMakeAndModelAndTrim(make, model, trim);
-			}
-			return cs.getCarMakeAndModel(make, model);
-		} else if (make == null && model == null) {
-			return cs.getCarTrim(trim);
-		} else if (model == null && trim == null) {
+		if (make != null) {
 			return cs.getCarMake(make);
-		} else if (make == null && trim == null){
+		} else if (model != null) {
 			return cs.getCarModel(model);
+		} else if (trim != null) {
+			return cs.getCarTrim(trim);
+		} else if (year != null) {
+			return cs.getCarByYear(Integer.parseInt(year));
+		} else if (price != null) {
+			return cs.getCarByPrice(Integer.parseInt(price));
+		} else if (mileage != null) {
+			return cs.getCarByMileage(Integer.parseInt(mileage));
 		} else {
 			return new ArrayList<Car>();
 		}

@@ -18,6 +18,9 @@ export class CarComponent implements OnInit {
   make:string = '';
   model:string = '';
   trim:string = '';
+  year:number = 0;
+  price:number = 0;
+  mileage:number = 0;
 
   getCars() {
     this.http.getAllCars().subscribe(
@@ -28,41 +31,29 @@ export class CarComponent implements OnInit {
   }
 
   searchCars() {
-    if (this.model === "" && this.make !== "") {
-      this.http.searchCars("make", this.make).subscribe(
-        (response) => {
-          if (this.trim !== "") {
-            response = response.filter(car => car.trim === this.trim)
-          }
-          console.log(response)
-          
+    this.http.getAllCars().subscribe (
+      (response) => {
+        if (this.make !== '') {
+          response = response.filter(car => car.make === this.make)
         }
-      )
-    } else if (this.model !== "" || this.trim !== "") {
-      this.http.searchCars("model", this.model).subscribe(
-        (response) => {
-
-          if (this.trim !== "" && this.model !== "") {
-            response = response.filter(car => car.trim === this.trim)
-            console.log(response)
-
-          } else if (this.make === "" && this.model === "") {
-            this.http.searchCars("trim", this.trim).subscribe(
-              (response) => {
-                console.log(response)
-
-              }
-            )
-          } else if (this.make !== "") {
-            response = response.filter(car => car.make === this.make)
-            console.log(response)
-
-          } else {
-            console.log(response)
-          }
-
+        if (this.model !== '') {
+          response = response.filter(car => car.model === this.model)
         }
-      )
-    }
+        if (this.trim !== '') {
+          response = response.filter(car => car.trim === this.trim)
+        }
+        if (this.year > 0) {
+          response = response.filter(car => car.year === this.year)
+        }
+        if (this.price > 0) {
+          response = response.filter(car => car.price === this.price)
+        }
+        if (this.mileage > 0) {
+          response = response.filter(car => car.mileage === this.mileage)
+        }
+        console.log(response);
+      }
+    )
   }
+
 }

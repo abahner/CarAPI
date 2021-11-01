@@ -72,20 +72,26 @@ public class CarServiceImpl implements CarService {
 		return cr.findByModel(model);
 	}
 
-	@Override
-	public List<Car> getCarMakeAndModel(String make, String model) {
-		return cr.findByMakeAndModel(make, model);
-
-	}
 
 	@Override
 	public List<Car> getCarTrim(String trim) {
 		return cr.findByTrim(trim);
 	}
 
+
 	@Override
-	public List<Car> getCarMakeAndModelAndTrim(String make, String model, String trim) {
-		return cr.findByMakeAndModelAndTrim(make, model, trim);
+	public List<Car> getCarByPrice(int price) {
+		return cr.findByPrice(price);
+	}
+
+	@Override
+	public List<Car> getCarByMileage(int mileage) {
+		return cr.findByMileage(mileage);
+	}
+
+	@Override
+	public List<Car> getCarByYear(int year) {
+		return cr.findByYear(year);
 	}
 
 	

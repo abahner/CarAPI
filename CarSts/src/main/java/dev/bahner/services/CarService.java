@@ -14,7 +14,7 @@ public interface CarService {
 	public List<Car> getCarModel(String model);
 	public List<Car> getCarMake(String make);
 	public List<Car> getCarTrim(String trim);
-	public List<Car> getCarMakeAndModel(String make, String model);
-	public List<Car> getCarMakeAndModelAndTrim(String make, String model, String trim);
-
+	public List<Car> getCarByPrice(int price);
+	public List<Car> getCarByMileage(int mileage);
+	public List<Car> getCarByYear(int year);
 }
