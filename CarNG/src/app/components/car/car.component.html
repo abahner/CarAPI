@@ -10,18 +10,18 @@
     <input id="inputTrim" type="text" [(ngModel)]="trim">
     <br>
     <label style="margin-left: 25px;">Year: </label>
-    <input id="inputYear" type="number" [(ngModel)]="year">
+    <input id="inputYear" type="text" [(ngModel)]="year">
     <label style="margin-left: 25px;">Mileage: </label>
-    <input id="inputMileage" type="number" [(ngModel)]="mileage">
+    <input id="inputMileage" type="text" [(ngModel)]="mileage">
     <label style="margin-left: 25px;">Price: </label>
-    <input id="inputPrice" type="number" [(ngModel)]="price">
+    <input id="inputPrice" type="text" [(ngModel)]="price">
     <button id="q" (click)="searchCars()" style="margin: 25px 15px 0px 25px">Search</button>
     <hr>
 
 
 </div>
 
-<h4>-</h4>
+<div style="width: 50%; margin: 20px 50px 20px 50px;">
 <table id="carDataTable" class="table table-danger">
 
     <thead>
@@ -46,3 +46,4 @@
     </tbody>
 
 </table>
+</div>

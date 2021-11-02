@@ -18,9 +18,9 @@ export class CarComponent implements OnInit {
   make:string = '';
   model:string = '';
   trim:string = '';
-  year:number = 0;
-  price:number = 0;
-  mileage:number = 0;
+  year:string = '';
+  price:string = '';
+  mileage:string = '';
   carsList : Car[] = [];
 
   getCars() {
@@ -44,14 +44,14 @@ export class CarComponent implements OnInit {
         if (this.trim !== '') {
           response = response.filter(car => car.trim === this.trim)
         }
-        if (this.year > 0) {
-          response = response.filter(car => car.year === this.year)
+        if (this.year !== '') {
+          response = response.filter(car => car.year === parseInt(this.year))
         }
-        if (this.price > 0) {
-          response = response.filter(car => car.price === this.price)
+        if (this.price !== '') {
+          response = response.filter(car => car.price === parseInt(this.price))
         }
-        if (this.mileage > 0) {
-          response = response.filter(car => car.mileage === this.mileage)
+        if (this.mileage !== '') {
+          response = response.filter(car => car.mileage === parseInt(this.mileage))
         }
         console.log(response);
         this.carsList = response
