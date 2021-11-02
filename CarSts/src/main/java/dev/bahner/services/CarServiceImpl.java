@@ -16,7 +16,7 @@ import dev.bahner.repositories.CarRepo;
 public class CarServiceImpl implements CarService {
 	
 	@Autowired
-	CarRepo cr;
+	public CarRepo cr;
 
 	@Override
 	public Car addCar(Car c) {

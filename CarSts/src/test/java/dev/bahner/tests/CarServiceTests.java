@@ -1,12 +1,14 @@
 package dev.bahner.tests;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +36,10 @@ public class CarServiceTests {
 		
 		c = cs.addCar(c);
 		
-		Assertions.assertEquals(2000, c.getYear());
-		Assertions.assertEquals("Pontiac", c.getMake());
-		Assertions.assertEquals("Trans Am", c.getModel());
-		Assertions.assertEquals("WS6", c.getTrim());	
+		assertEquals(2000, c.getYear());
+		assertEquals("Pontiac", c.getMake());
+		assertEquals("Trans Am", c.getModel());
+		assertEquals("WS6", c.getTrim());	
 	}
 	
 	@Test
@@ -58,10 +60,10 @@ public class CarServiceTests {
 		
 		cs.getCar(c.getId());
 		
-		Assertions.assertEquals(2000, c.getYear());
-		Assertions.assertEquals("Pontiac", c.getMake());
-		Assertions.assertEquals("Trans Am", c.getModel());
-		Assertions.assertEquals("WS6", c.getTrim());
+		assertEquals(2000, c.getYear());
+		assertEquals("Pontiac", c.getMake());
+		assertEquals("Trans Am", c.getModel());
+		assertEquals("WS6", c.getTrim());
 	}
 	
 	@Test
@@ -81,10 +83,10 @@ public class CarServiceTests {
 		Mockito.when(cr.save(c)).thenReturn(new Car(2, 2002, "Pontiac", "Firebird", "Formula", 211000, 420, "img"));
 		c = cs.updateCar(c);
 		
-		Assertions.assertEquals(2002, c.getYear());
-		Assertions.assertEquals("Pontiac", c.getMake());
-		Assertions.assertEquals("Firebird", c.getModel());
-		Assertions.assertEquals("Formula", c.getTrim());
+		assertEquals(2002, c.getYear());
+		assertEquals("Pontiac", c.getMake());
+		assertEquals("Firebird", c.getModel());
+		assertEquals("Formula", c.getTrim());
 	}
 	
 	@Test
@@ -102,7 +104,7 @@ public class CarServiceTests {
 		Car c = new Car(2, 2000, "Pontiac", "Trans am", "WS6", 184000, 4200, "img");
 		Mockito.when(cr.existsById(c.getId())).thenReturn(true);
 		
-		Assertions.assertEquals(cs.deleteCar(c.getId()), true);
+		assertEquals(cs.deleteCar(c.getId()), true);
 	}
 	
 	@Test
@@ -121,7 +123,7 @@ public class CarServiceTests {
 		List<Car> cars = new ArrayList<Car>();
 		cars.add(c);
 		Mockito.when(cr.findAll()).thenReturn(cars);
-		Assertions.assertNotNull(cars);
+		assertNotNull(cars);
 	}
 	
 	@Test public void search() {
@@ -135,13 +137,130 @@ public class CarServiceTests {
 		makeModelSearch.add(c1);
 		
 		Mockito.when(cr.findByMake(c1.getMake())).thenReturn(makeSearch);
-		Assertions.assertEquals(cs.getCarMake(c1.getMake()), makeSearch);
+		assertEquals(cs.getCarMake(c1.getMake()), makeSearch);
 		
 		Mockito.when(cr.findByModel(c2.getModel())).thenReturn(modelSearch);
-		Assertions.assertEquals(cs.getCarModel(c2.getModel()), modelSearch);
+		assertEquals(cs.getCarModel(c2.getModel()), modelSearch);
 		
-		Mockito.when(cr.findByMakeAndModel(c1.getMake(), c1.getModel())).thenReturn(makeModelSearch);
-		Assertions.assertEquals(cs.getCarMakeAndModel(c1.getMake(), c1.getModel()), makeModelSearch);
+	}
+	
+	@Test
+	public void carCarByMakeSuccess() {
+		Car c = new Car(2, 2000, "Pontiac", "Trans am", "WS6", 184000, 4200, "img");
+		Mockito.when(cr.existsById(c.getId())).thenReturn(true);
+		Mockito.when(cr.findById(c.getId())).thenReturn(Optional.of(c));
+		
+		cs.getCarMake(c.getMake());
+		
+		assertEquals("Pontiac", c.getMake());
+	}
+	
+	@Test
+	public void carCarByMakeFail() {
+		Car c = new Car(2, 2000, "Pontiac", "Trans am", "WS6", 184000, 4200, "img");
+		Mockito.when(cr.existsById(c.getId())).thenReturn(false);
+
+		assertThat(cs.getCarMake(c.getMake()) == null);
+	}
+	
+	@Test
+	public void carCarByModelSuccess() {
+		Car c = new Car(2, 2000, "Pontiac", "Trans am", "WS6", 184000, 4200, "img");
+		Mockito.when(cr.existsById(c.getId())).thenReturn(true);
+		Mockito.when(cr.findById(c.getId())).thenReturn(Optional.of(c));
+		
+		cs.getCarModel(c.getModel());
+		
+		assertEquals("Trans am", c.getModel());
+	}
+	
+	@Test
+	public void carCarByModelFail() {
+		Car c = new Car(2, 2000, "Pontiac", "Trans am", "WS6", 184000, 4200, "img");
+		Mockito.when(cr.existsById(c.getId())).thenReturn(false);
+
+		assertThat(cs.getCarModel(c.getModel()) == null);
+
+	}
+	
+	@Test
+	public void carCarByTrimSuccess() {
+		Car c = new Car(2, 2000, "Pontiac", "Trans am", "WS6", 184000, 4200, "img");
+		Mockito.when(cr.existsById(c.getId())).thenReturn(true);
+		Mockito.when(cr.findById(c.getId())).thenReturn(Optional.of(c));
+		
+		cs.getCarTrim(c.getTrim());
+		
+		assertEquals("WS6", c.getTrim());
+	}
+	
+	@Test
+	public void carCarByTrimFail() {
+		Car c = new Car(2, 2000, "Pontiac", "Trans am", "WS6", 184000, 4200, "img");
+		Mockito.when(cr.existsById(c.getId())).thenReturn(false);
+
+		assertThat(cs.getCarTrim(c.getTrim()) == null);
+
+	}
+	
+	@Test
+	public void carCarByYearSuccess() {
+		Car c = new Car(2, 2000, "Pontiac", "Trans am", "WS6", 184000, 4200, "img");
+		Mockito.when(cr.existsById(c.getId())).thenReturn(true);
+		Mockito.when(cr.findById(c.getId())).thenReturn(Optional.of(c));
+		
+		cs.getCarByYear(c.getYear());
+		
+		assertEquals(2000, c.getYear());
+	}
+	
+	@Test
+	public void carCarByYearFail() {
+		Car c = new Car(2, 2000, "Pontiac", "Trans am", "WS6", 184000, 4200, "img");
+		Mockito.when(cr.existsById(c.getId())).thenReturn(false);
+
+		assertThat(cs.getCarByYear(c.getYear()) == null);
+
+	}
+	
+	@Test
+	public void carCarByPriceSuccess() {
+		Car c = new Car(2, 2000, "Pontiac", "Trans am", "WS6", 184000, 4200, "img");
+		Mockito.when(cr.existsById(c.getId())).thenReturn(true);
+		Mockito.when(cr.findById(c.getId())).thenReturn(Optional.of(c));
+		
+		cs.getCarByPrice(c.getPrice());
+		
+		assertEquals(4200, c.getPrice());
+	}
+	
+	@Test
+	public void carCarByPriceFail() {
+		Car c = new Car(2, 2000, "Pontiac", "Trans am", "WS6", 184000, 4200, "img");
+		Mockito.when(cr.existsById(c.getId())).thenReturn(false);
+
+		assertThat(cs.getCarByPrice(c.getPrice()) == null);
+
+	}
+	
+	@Test
+	public void carCarByMileageSuccess() {
+		Car c = new Car(2, 2000, "Pontiac", "Trans am", "WS6", 184000, 4200, "img");
+		Mockito.when(cr.existsById(c.getId())).thenReturn(true);
+		Mockito.when(cr.findById(c.getId())).thenReturn(Optional.of(c));
+		
+		cs.getCarByMileage(c.getMileage());
+		
+		assertEquals(184000, c.getMileage());
+	}
+	
+	@Test
+	public void carCarByMileageFail() {
+		Car c = new Car(2, 2000, "Pontiac", "Trans am", "WS6", 184000, 4200, "img");
+		Mockito.when(cr.existsById(c.getId())).thenReturn(false);
+
+		assertThat(cs.getCarByMileage(c.getMileage()) == null);
+
 	}
 
 	
