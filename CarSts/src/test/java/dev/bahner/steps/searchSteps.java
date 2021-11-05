@@ -19,7 +19,7 @@ public class searchSteps {
 	@Given("the browser is open")
 	public void the_browser_is_open() throws InterruptedException {
 		
-		driver.get("http://localhost:4200/home");
+		driver.get("http://localhost:4200");
 		Thread.sleep(50);
 	}
 
@@ -55,9 +55,9 @@ public class searchSteps {
 
 	@Then("the correct results are returned")
 	public void the_correct_results_are_returned() throws InterruptedException {
-		
-		assertThat(driver.findElement(By.xpath("/html/body/app-root/app-car/div[2]/table/tbody/tr[1]")).isDisplayed());
 		Thread.sleep(100);
+		assertThat(driver.findElement(By.xpath("/html/body/app-root/app-car/div[2]/table/tbody/tr[1]")).isDisplayed());
+		
 	}
 	
 
